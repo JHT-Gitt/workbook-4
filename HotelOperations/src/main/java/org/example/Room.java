@@ -3,12 +3,12 @@ package org.example;
 public class Room {
 
     private int numberOfBeds;
-    private float price;
+    private double price;
     private boolean isOccupied;
     private boolean isDirty;
     private boolean isAvailable;
 
-    public Room(boolean isAvailable, boolean isDirty, boolean isOccupied, float price, int numberOfBeds) {
+    public Room(boolean isAvailable, boolean isDirty, boolean isOccupied, double price, int numberOfBeds) {
         this.isAvailable = isAvailable;
         this.isDirty = isDirty;
         this.isOccupied = isOccupied;
@@ -24,11 +24,11 @@ public class Room {
         this.numberOfBeds = numberOfBeds;
     }
 
-    public float getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(double price) {
         this.price = price;
     }
     public void checkIn(){

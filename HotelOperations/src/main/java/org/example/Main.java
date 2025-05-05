@@ -8,7 +8,7 @@ public class Main {
         System.out.println(reserve.getPrice());
 
         Employee e = new Employee();
-        e.punchTimeCard(5,13.5);
+        e.punchTimeCard(5,13);
         System.out.println(e.getHoursWorked());
     }
 }

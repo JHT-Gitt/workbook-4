@@ -2,12 +2,12 @@ package org.example;
 
 public class Reservation {
     private String roomType;
-    private float price;
+    private double price;
     private int numberOfNights;
     private boolean isWeekend;
-    private float reservationTotal;
+    private double reservationTotal;
 
-    public Reservation(String roomType, float price, int numberOfNights, boolean isWeekend, float reservationTotal) {
+    public Reservation(String roomType, double price, int numberOfNights, boolean isWeekend, double reservationTotal) {
         this.roomType = roomType;
         this.price = price;
         this.numberOfNights = numberOfNights;
@@ -31,11 +31,11 @@ public class Reservation {
         }
     }
 
-    public float getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -51,7 +51,7 @@ public class Reservation {
         isWeekend = weekend;
     }
 
-    public float getReservationTotal() {
+    public double getReservationTotal() {
         return reservationTotal;
     }
 
