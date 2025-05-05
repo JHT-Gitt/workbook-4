@@ -1,5 +1,8 @@
 package org.example;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 public class Employee {
     private int id;
     private String name;
@@ -70,5 +73,8 @@ public class Employee {
         }
         return overtimeHours;
     }
-    
+    public void punchTimeCard(float timeIn, float timeOut){
+
+        this.hoursWorked = timeOut - timeIn;
+    }
 }

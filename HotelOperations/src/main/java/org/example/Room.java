@@ -31,4 +31,16 @@ public class Room {
     public void setPrice(float price) {
         this.price = price;
     }
+    public void checkIn(){
+        this.isOccupied = true;
+        this.isDirty = true;
+    }
+    public void checkout(){
+        cleanroom();
+        this.isAvailable = true;
+        this.isOccupied = false;
+    }
+    public void cleanroom(){
+        this.isDirty = false;
+    }
 }
