@@ -4,9 +4,9 @@ public class Room {
 
     private int numberOfBeds;
     private double price;
-    private boolean isOccupied;
-    private boolean isDirty;
-    private boolean isAvailable;
+    boolean isOccupied;
+    boolean isDirty;
+    boolean isAvailable;
 
     public Room(boolean isAvailable, boolean isDirty, boolean isOccupied, double price, int numberOfBeds) {
         this.isAvailable = isAvailable;
@@ -15,6 +15,10 @@ public class Room {
         this.price = price;
         this.numberOfBeds = numberOfBeds;
     }
+
+//    public Room(){
+//
+//    }
 
     public int getNumberOfBeds() {
         return numberOfBeds;
@@ -32,15 +36,24 @@ public class Room {
         this.price = price;
     }
     public void checkIn(){
+        if(this.isOccupied){
+            throw new IllegalStateException("\nError ! Can't check in. Room is Occupied.");
+        }
+        if(this.isDirty){
+            throw new IllegalStateException("\nError ! Can't check in. Room is Dirty");
+        }
         this.isOccupied = true;
         this.isDirty = true;
     }
     public void checkout(){
+        this.isOccupied = false;
         cleanroom();
         this.isAvailable = true;
-        this.isOccupied = false;
     }
     public void cleanroom(){
+        if (this.isOccupied) {
+            throw new IllegalStateException("\nError ! Can't clean an occupied room.");
+        }
         this.isDirty = false;
     }
 }
