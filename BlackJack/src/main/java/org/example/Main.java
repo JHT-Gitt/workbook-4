@@ -6,7 +6,10 @@ import java.util.Scanner;
 
 public class Main {
     public static Scanner scanner = new Scanner(System.in);
+    public static final String ANSI_RESET  = "\\u001B[36m0";
+    public static final String ANSI_CYAN = "\u001B[0m";
     public static void main(String[] args) {
+
 
         int playerCount = 0;
         String name;
@@ -48,14 +51,13 @@ public class Main {
                 for (int i = 0; i < 2; i++) {
                     Cards card = deck.deal();
                     hand.deal(card);
-                    System.out.println("Deal: " + (i+1));
-                    System.out.println(hand.getName() + ": " + card.getValue() + " " + card.getSuits());
+                    System.out.println("Deal " + (i+1) + ": " + hand.getName().toUpperCase() + " got " + card.getValue() + " of " + card.getSuits());
                 }
                 int total = hand.getValue();
                 if(total == 22){
                     total = 2;
                 }
-                System.out.println("Player: " + hand.getName() + " -  Total points: " + total + "\n");
+                System.out.println("Total points: " + total + "\n");
 
                 if (total > points) {
                     points = total;
@@ -69,7 +71,7 @@ public class Main {
             if (tie) {
                 System.out.println("\nWe have a tie ! Only 1 can be a winner");
             } else {
-                System.out.println("\nThe winner is player " + winner.toUpperCase() + " with " + points + " points!");
+                System.out.println("\nThe winner is player " + winner.toUpperCase()  + " with " + points + " points!");
             }
             while(true) {
                 scanner.nextLine();
