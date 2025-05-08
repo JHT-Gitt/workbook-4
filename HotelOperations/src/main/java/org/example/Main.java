@@ -8,8 +8,14 @@ public class Main {
         System.out.println(reserve.getPrice());
 
         Employee e = new Employee();
-        e.punchTimeCard(5,13);
-        System.out.println(e.getHoursWorked());
+     //   e.punchTimeCard(5,15);
+        //System.out.println(e.getHoursWorked());
+        e.setPayRate(20);
+        e.setHoursWorked(45);
+
+        System.out.println("Overtime Hours "+e.getOvertimeHours());
+        System.out.println(e.getTotalPay());
+
 
 
         //Room r = new Room();

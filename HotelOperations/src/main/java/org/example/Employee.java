@@ -61,7 +61,7 @@ public class Employee {
         this.hoursWorked = hoursWorked;
     }
     public double getTotalPay(){
-        double totalPay = this.payRate * this.hoursWorked;
+        double totalPay = (this.payRate * this.hoursWorked) + ((this.payRate*2)*getOvertimeHours());
         
         return totalPay;
     }
