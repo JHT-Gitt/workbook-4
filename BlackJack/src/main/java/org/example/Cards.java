@@ -23,7 +23,7 @@ public class Cards {
             case "Q":
             case "K":
                 return 10;
-            case "A":
+            case "Ace":
                 return 11;
             default:
                 return Integer.parseInt(value);

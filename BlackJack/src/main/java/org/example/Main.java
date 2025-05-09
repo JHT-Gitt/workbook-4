@@ -53,11 +53,48 @@ public class Main {
                     hand.deal(card);
                     System.out.println("Deal " + (i+1) + ": " + hand.getName().toUpperCase() + " got " + card.getValue() + " of " + card.getSuits());
                 }
+
                 int total = hand.getValue();
-                if(total == 22){
-                    total = 2;
+                if(total >= 22){
+                    total = 0;
                 }
                 System.out.println("Total points: " + total + "\n");
+                if (total == 21 ){
+                    System.out.println("\nYou got 21 🔥🔥🔥");
+                    break;
+                }else if(total < 21){
+                    System.out.print("\nDo you wanna:\n 1 - 🎯HIT\n 2 - 🤚STAY \nChoose: ");
+                    int add = scanner.nextInt();
+                    if(add == 1) {
+                        for (int i = 0; i < 1; i++) {
+                            Cards card = deck.deal();
+                            hand.deal(card);
+                            System.out.println("Deal " + (i + 1) + ": " + hand.getName().toUpperCase() + " got " + card.getValue() + " of " + card.getSuits());
+                            System.out.println("Total points: " + (total+total) + "\n");
+                            break;
+                        }
+                    }else if(add == 2){
+                        break;
+                    }
+                }
+
+//                for (int a = 0; a < playerCount; a++) {
+//                    System.out.print("\nDo you wanna:\n 1 - 🎯HIT\n 2 - 🤚STAY \nChoose: ");
+//                    int add = scanner.nextInt();
+//                    if(add == 1) {
+//                        for (int i = 0; i < 1; i++) {
+//                            Cards card = deck.deal();
+//                            hand.deal(card);
+//                            System.out.println("Deal " + (i + 1) + ": " + hand.getName().toUpperCase() + " got " + card.getValue() + " of " + card.getSuits());
+//                            System.out.println("Total points: " + total + "\n");
+//                            break;
+//                        }
+//                    }else if(add == 2){
+//                        break;
+//                    }
+//
+//
+//                }
 
                 if (total > points) {
                     points = total;
@@ -66,7 +103,6 @@ public class Main {
                 } else if (total == points) {
                     tie = true;
                 }
-
             }
             if (tie) {
                 System.out.println("\nWe have a tie ! Only 1 can be a winner");
@@ -88,4 +124,5 @@ public class Main {
         }
 
     }
+
 }
