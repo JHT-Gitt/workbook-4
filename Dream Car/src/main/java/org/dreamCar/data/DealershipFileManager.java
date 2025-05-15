@@ -3,10 +3,7 @@ package org.dreamCar.data;
 import org.dreamCar.model.Dealership;
 import org.dreamCar.model.Vehicle;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -14,22 +11,32 @@ import java.util.Scanner;
 public class DealershipFileManager {
     public static Scanner scanner = new Scanner(System.in);
     public static List<Vehicle> vehicle = new ArrayList<>();
-//    public static  ArrayList<Dealership> dealership = new ArrayList<>();
+    public static ArrayList<Dealership> dealership = new ArrayList<>();
+
+
+//    public void deal(){
+//
+//        dealerships.add(new Dealership("D&B used Cars", "111 Old Benbrool RD", "817-555-5555"));
+//
+//    }
+
+
     public static List<Vehicle> getDealership(String file) {
-
-
+       // Dealership dealership = null;
         try {
             BufferedReader buff = new BufferedReader(new FileReader(file));
-//            String dealershipInfo = buff.readLine();
-//            if (dealershipInfo == null) return null;
-
-//            String[] parts = dealershipInfo.split("\\|");
-//            String name = parts[0].trim();
-//            String address = parts[1].trim();
-//            String phone = parts[2].trim();
-//
-//            //dealership = new Dealership(name, address, phone);
-            buff.readLine();
+            String dealershipInfo = buff.readLine();
+            if (dealershipInfo == null) return null;
+            String[] parts = dealershipInfo.split("\\|");
+            String name = parts[0].trim();
+            String address = parts[1].trim();
+            String phone = parts[2].trim();
+            Dealership d = new Dealership(name, address, phone);
+            dealership.add(d);
+           // buff.readLine();
+//            String header = buff.readLine();
+//            String[] dealerInfo = header.split("\\|");
+//            dealership = new Dealership(dealerInfo[0], dealerInfo[1], dealerInfo[2]);
             String line;
             while ((line = buff.readLine()) != null) {
                 String[] token = line.split("\\|");
@@ -57,7 +64,33 @@ public class DealershipFileManager {
         return vehicle;
     }
         public void saveDealership(Dealership dealership) {
-        // Save dealership to file
+            try (PrintWriter writer = new PrintWriter(new FileWriter("src/main/resources/dealership.csv"))) {
+
+                writer.printf("%s|%s|%s\n",
+                        dealership.getName(),
+                        dealership.getAddress(),
+                        dealership.getPhone()
+                );
+
+                // Write each vehicle
+                for (Vehicle v : vehicle) {
+                    writer.printf("%d|%d|%s|%s|%s|%s|%d|%.2f\n",
+                            v.getVin(),
+                            v.getYear(),
+                            v.getMake(),
+                            v.getModel(),
+                            v.getVehicleType(),
+                            v.getColor(),
+                            v.getOdometer(),
+                            v.getPrice()
+                    );
+                }
+
+                System.out.println("Dealership saved to file.");
+
+            } catch (IOException e) {
+                System.out.println("Error saving dealership to file: " + e.getMessage());
+            }
     }
 }
 

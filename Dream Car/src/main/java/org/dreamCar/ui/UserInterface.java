@@ -1,5 +1,9 @@
 package org.dreamCar.ui;
 
+import org.dreamCar.Main;
+import org.dreamCar.contract.ContractDataManager;
+import org.dreamCar.contract.SalesContract;
+import org.dreamCar.data.DealershipFileManager;
 import org.dreamCar.model.Dealership;
 import org.dreamCar.model.Vehicle;
 
@@ -8,16 +12,19 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
+import static org.dreamCar.data.DealershipFileManager.scanner;
+
 public class UserInterface {
     static Scanner sc = new Scanner(System.in);
-    public static List<Dealership> dealership = new ArrayList<>();
-
+   // public static List<Dealership> dealership = new ArrayList<>();
+   private static Dealership dealership;
  //   public UserInterface() {
       //  dealership = new DealershipFileManager().getDealership();
  //   }
 
     public static void display(List<Vehicle> vehicle) {
         int enter;
+        String file="";
 
         System.out.println("\nWELCOME BUYER !");
         System.out.println(" 1 - Find vehicles price range");
@@ -29,28 +36,50 @@ public class UserInterface {
         System.out.println(" 7 - List all vehicles");
         System.out.println(" 8 - Add vehicle");
         System.out.println(" 9 - Remove vehicle");
+        System.out.println(" 10 - List all Contract");
+        System.out.println(" 11 - Sell/Lease Vehicle");
         System.out.println(" 99 - Quit");
 
         while(true){
             try{
                 System.out.print("\nEnter: ");
                 enter = sc.nextInt();
+                System.out.println();
 
                 switch (enter){
                     case 1:
-
+                        processGetByPriceRequest();
+                        break;
                     case 2:
+                        processGetByMakeModelRequest();
+                        break;
                     case 3:
+                        processGetByYearRequest();
+                        break;
                     case 4:
                         processGetByColorRequest();
                         break;
                     case 5:
+                        processGetByMileageRequest();
+                        break;
                     case 6:
+                        processGetByVehicleTypeRequest();
+                        break;
                     case 7:
                         Dealership.getAllVehicles(vehicle);
                         break;
                     case 8:
+                        processAddVehicleRequest();
+                        break;
                     case 9:
+                        processRemoveVehicleRequest(vehicle);
+                        break;
+                    case 10:
+                        Main.getRecords();
+                        break;
+                    case 11:
+                        ContractDataManager.saleLease();
+                        break;
                     case 99:
                         System.exit(0);
                     default:
@@ -67,28 +96,61 @@ public class UserInterface {
 
 
     }
+//    public static void saleLease() {
+//
+//
+//
+//    }
 
     public static void processGetByPriceRequest() {
-        System.out.println("\nEnter minimum Price: ");
-        double min = sc.nextDouble();
-        System.out.println("\nEnter maximum Price: ");
-        double max = sc.nextDouble();
+//        System.out.println("\nEnter minimum Price: ");
+//        double min = sc.nextDouble();
+//        System.out.println("\nEnter maximum Price: ");
+//        double max = sc.nextDouble();
+        System.out.println("Not Added yet");
 
 
 
     }
-    public void processGetByMakeModelRequest() {}
-    public void processGetByYearRequest() {}
+    public static void processGetByMakeModelRequest() {
+        System.out.println("Not Added yet");
+    }
+    public static void processGetByYearRequest() {
+        System.out.println("Not Added yet");
+    }
     public static void processGetByColorRequest() {
-        System.out.print("\nEnter color: ");
-        String colorSearch = sc.next();
-
-        Dealership.getVehiclesByColor(colorSearch);
+//        System.out.print("Enter Color: ");
+//        String color = scanner.nextLine();
+//        List<Vehicle> results = dealership.getVehiclesByColor(color);
+//        displayVehicles(results);
+        System.out.println("Not Added yet");
 
     }
-    public void processGetByMileageRequest() {}
-    public void processGetByVehicleTypeRequest() {}
-    public void processAllVehiclesRequest() {}
-    public void processAddVehicleRequest() {}
-    public void processRemoveVehicleRequest() {}
+    public static void processGetByMileageRequest() {
+        System.out.println("Not Added yet");
+    }
+    public static void processGetByVehicleTypeRequest() {
+        System.out.println("Not Added yet");
+    }
+    public static void processAllVehiclesRequest() {
+        System.out.println("Not Added yet");
+    }
+    public static void processAddVehicleRequest() {
+        System.out.println("Not Added yet");
+    }
+    public static void processRemoveVehicleRequest(List<Vehicle> vehicle) {
+        System.out.print("Enter VIN of vehicle to remove: ");
+        int vin = scanner.nextInt();
+        scanner.nextLine();
+
+        dealership.removeVehicle(vehicle,vin);
+
+//        DealershipFileManager dfm = new DealershipFileManager();
+//        dfm.saveDealership(dealership);
+        DealershipFileManager d = new DealershipFileManager();
+        d.saveDealership(dealership);
+
+        System.out.println("\nVehicle removed successfully!");
+
+    }
 }

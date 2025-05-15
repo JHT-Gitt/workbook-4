@@ -1,4 +1,5 @@
 package org.dreamCar.model;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,16 @@ public class Dealership {
     private String address;
     private String phone;
 
-    private static List<Vehicle> inventory = new ArrayList<>();
+    private static List<Vehicle> inventory;
+    public static final String RESET = "\u001B[0m";
+    public static final String BLACK = "\u001B[30m";
+    public static final String RED = "\u001B[31m";
+    public static final String GREEN = "\u001B[32m";
+    public static final String YELLOW = "\u001B[33m";
+    public static final String BLUE = "\u001B[34m";
+    public static final String PURPLE = "\u001B[35m";
+    public static final String CYAN = "\u001B[36m";
+    public static final String WHITE = "\u001B[37m";
 
     public Dealership(String name, String address, String phone) {
         this.name = name;
@@ -69,12 +79,15 @@ public class Dealership {
         return result;
     }
 
-    public static void getVehiclesByColor(String color) {
+    public void getVehiclesByColor(String color) {
+
 //        List<Vehicle> result = new ArrayList<>();
+      ;
         for (Vehicle v : inventory) {
             String c = v.getColor();
             if (c.equalsIgnoreCase(color)) {
-                System.out.printf("\n%-10d %-10d  %-10s %-10s %-10s %-10s  %-10d %-10.2f",
+
+                System.out.printf("\n%-10d %-10d  %-10s %-10s %-10s %-10s  %-10d %-10.2f" ,
                         v.getVin(),v.getYear(),v.getMake(),v.getModel(),
                         v.getVehicleType(),v.getColor(),v.getOdometer(),v.getPrice());
             }
@@ -104,7 +117,7 @@ public class Dealership {
 
     public static void getAllVehicles(List<Vehicle> inventory) {
        for(Vehicle v : inventory){
-           System.out.printf("\n%-10d %-10d  %-10s %-10s %-10s %-10s  %-10d %-10.2f",
+           System.out.printf(YELLOW + "%-10d %-10d  %-10s %-10s %-10s %-10s  %-10d %-10.2f\n" + RESET,
                    v.getVin(),v.getYear(),v.getMake(),v.getModel(),
                    v.getVehicleType(),v.getColor(),v.getOdometer(),v.getPrice());
        }
@@ -114,7 +127,9 @@ public class Dealership {
         inventory.add(vehicle);
     }
 
-    public void removeVehicle(Vehicle vehicle) {
-        inventory.remove(vehicle);
+    public static void removeVehicle(List<Vehicle> inventory ,int vin) {
+            inventory.removeIf(in -> in.getVin() == vin);
     }
+
+
 }
