@@ -5,86 +5,61 @@ import org.w3c.dom.ls.LSOutput;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
-//import static org.dreamCar.contract.SalesContract;
-
-import static org.dreamCar.data.DealershipFileManager.scanner;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class ContractDataManager {
+    private static final String file = "src/main/java/org/dreamCar/contract/contracts.csv";
 
-    public static List<Vehicle> inventory = new ArrayList<>();
+    public void saveContract(Contract contract) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
+            StringBuilder sb = new StringBuilder();
 
-   public static ArrayList<SalesContract> sales = new ArrayList<>();
-
-   static String choice;
-    static String date;
-    static String name;
-    static String email;
-    static String isFinance;
-    static int vin;
-
-         public static String saleLease(){
-
-
-             System.out.println("\n S - Sell   L - Lease");
-             System.out.print("Enter type of Contract: ");
-             choice = scanner.next();
-             if (choice.equalsIgnoreCase("s")){
-                 choice = "SALE";
-                 sale();
-
-             }else if(choice.equalsIgnoreCase("l")){
-                 choice = "LEASE";
-                 lease();
-             }
-            // System.out.println(choice);
-
-             return choice;
-         }
-
-        public static void sale(){
-
-
-           for(Vehicle v : inventory){
-               int vh = v.getVin();
-           }
-
-            System.out.println(choice);
-            System.out.print("\nEnter Vehicle VIN : ");
-            vin = scanner.nextInt();
-            System.out.print("Enter date of contract (yyyy-mm-dd) : ");
-            date = scanner.next();
-            System.out.print("Enter Customer name : ");
-            name = scanner.next();
-            System.out.print("Enter Customer email : ");
-            email = scanner.next();
-            System.out.print("Do you want to finance [Y/N]: ");
-            isFinance = scanner.next();
-
-            if(isFinance.equalsIgnoreCase("n")){
-                isFinance = "NO";
-            }else if(isFinance.equalsIgnoreCase("y")){
-
+            if (contract instanceof SalesContract) {
+                SalesContract sc = (SalesContract) contract;
+                sb.append("SALE|")
+                        .append(sc.getDate()).append("|")
+                        .append(sc.getCustomerName()).append("|")
+                        .append(sc.getCustomerEmail()).append("|")
+                        .append(getVehicleData(sc.getVehicle())).append("|")
+                        .append(String.format("%.2f", sc.getVehicle().getPrice() * 0.05)).append("|")
+                        .append("100.00|")
+                        .append(sc.getVehicle().getPrice() < 10000 ? "295.00|" : "495.00|")
+                        .append(String.format("%.2f", sc.getTotalPrice())).append("|")
+                        .append(sc.isFinance() ? "YES|" : "NO|")
+                        .append(String.format("%.2f", sc.getMonthlyPayment()));
+            } else if (contract instanceof LeaseContract) {
+                LeaseContract lc = (LeaseContract) contract;
+                double endingValue = lc.getVehicle().getPrice() * 0.50;
+                double leaseFee = lc.getVehicle().getPrice() * 0.07;
+                sb.append("LEASE|")
+                        .append(lc.getDate()).append("|")
+                        .append(lc.getCustomerName()).append("|")
+                        .append(lc.getCustomerEmail()).append("|")
+                        .append(getVehicleData(lc.getVehicle())).append("|")
+                        .append(String.format("%.2f", endingValue)).append("|")
+                        .append(String.format("%.2f", leaseFee)).append("|")
+                        .append(String.format("%.2f", lc.getTotalPrice())).append("|")
+                        .append(String.format("%.2f", lc.getMonthlyPayment()));
             }
 
+            writer.write(sb.toString());
+            writer.newLine();
 
-
-
-
-
-
-
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
         }
-        public static void lease(){
-            System.out.println(choice);
+    }
 
-
-        }
-
-
-
-
-
-
-
-
+    private String getVehicleData(Vehicle vehicle) {
+        return vehicle.getVin() + "|" +
+                vehicle.getYear() + "|" +
+                vehicle.getMake() + "|" +
+                vehicle.getModel() + "|" +
+                vehicle.getType() + "|" +
+                vehicle.getColor() + "|" +
+                vehicle.getOdometer() + "|" +
+                String.format("%.2f", vehicle.getPrice());
+    }
 }

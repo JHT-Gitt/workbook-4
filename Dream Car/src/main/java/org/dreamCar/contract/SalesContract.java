@@ -1,61 +1,46 @@
 package org.dreamCar.contract;
 
+import org.dreamCar.model.Vehicle;
+
 public class SalesContract extends Contract {
-    private double taxAmount ;
-    private double recordingFee ;
-    private double processingFee;
-    private String finance;
-//    private double monthly48Finance = 4.25;
-//    private double monthly24Finance = 5.25;
+    private static final double taxRate = 0.05;
+    private static final double recordingFee = 100.0;
+    private static final double processingLow = 295.0;
+    private static final double processingHigh = 495.0;
+    private boolean finance;
 
-
-    public SalesContract(String contractType,String dateOfContract, String name, String email, int vehicleSold, double taxAmount, double recordingFee, double processingFee, String finance) {
-        super(contractType,dateOfContract, name, email, vehicleSold);
-        this.taxAmount = taxAmount;
-        this.recordingFee = recordingFee;
-        this.processingFee = processingFee;
+    public SalesContract(String date, String customerName, String customerEmail, Vehicle vehicle, boolean finance) {
+        super(date, customerName, customerEmail, vehicle);
         this.finance = finance;
-    }
-
-    public double getTaxAmount() {
-        return taxAmount;
-    }
-
-    public void setTaxAmount(double taxAmount) {
-        this.taxAmount = taxAmount;
-    }
-
-    public double getRecordingFee() {
-        return recordingFee;
-    }
-
-    public void setRecordingFee(double recordingFee) {
-        this.recordingFee = recordingFee;
-    }
-
-    public double getProcessingFee() {
-        return processingFee;
-    }
-
-    public void setProcessingFee(double processingFee) {
-        this.processingFee = processingFee;
-    }
-
-    public String getFinance() {
-        return finance;
-    }
-
-    public void setFinance(String finance) {
-        finance = finance;
     }
 
     @Override
     public double getTotalPrice() {
-        return 0;
+        double salesTax = vehicle.getPrice() * taxRate;
+        double processingFee = vehicle.getPrice() < 10000 ? processingLow : processingHigh;
+        return vehicle.getPrice() + salesTax + recordingFee + processingFee;
     }
 
     @Override
-    public double getMonthPayment() {
-        return 0;
+    public double getMonthlyPayment() {
+        if (!finance) return 0.0;
+
+        double principal = getTotalPrice();
+        double rate;
+        int months;
+
+        if (vehicle.getPrice() >= 10000) {
+            rate = 0.0425 / 12;
+            months = 48;
+        } else {
+            rate = 0.0525 / 12;
+            months = 24;
+        }
+
+        return (principal * rate) / (1 - Math.pow(1 + rate, -months));
+    }
+
+    public boolean isFinance() {
+        return finance;
     }
 }

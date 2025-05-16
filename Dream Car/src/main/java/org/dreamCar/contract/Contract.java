@@ -1,58 +1,36 @@
 package org.dreamCar.contract;
 
+import org.dreamCar.model.Vehicle;
+
 public abstract class Contract {
-    protected String contractType;
-    protected String dateOfContract;
-    protected String name;
-    protected String email;
-    protected int vehicleSold;
-    protected double totalPrice;
-    protected double monthPayment;
+    protected String date;
+    protected String customerName;
+    protected String customerEmail;
+    protected Vehicle vehicle;
 
-
-    public Contract(String contractType,String dateOfContract, String name, String email, int vehicleSold) {
-        this.contractType = contractType;
-        this.dateOfContract = dateOfContract;
-        this.name = name;
-        this.email = email;
-        this.vehicleSold = vehicleSold;
+    public Contract(String date, String customerName, String customerEmail, Vehicle vehicle) {
+        this.date = date;
+        this.customerName = customerName;
+        this.customerEmail = customerEmail;
+        this.vehicle = vehicle;
     }
 
-    public String getDateOfContract() {
-        return dateOfContract;
+    public String getDate() {
+        return date;
     }
 
-    public void setDateOfContract(String dateOfContract) {
-        this.dateOfContract = dateOfContract;
+    public String getCustomerName() {
+        return customerName;
     }
 
-    public String getName() {
-        return name;
+    public String getCustomerEmail() {
+        return customerEmail;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public Vehicle getVehicle() {
+        return vehicle;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public int getVehicleSold() {
-        return vehicleSold;
-    }
-
-    public void setVehicleSold(int vehicleSold) {
-        this.vehicleSold = vehicleSold;
-    }
     public abstract double getTotalPrice();
-
-    public abstract double getMonthPayment();
-
-
-
+    public abstract double getMonthlyPayment();
 }
